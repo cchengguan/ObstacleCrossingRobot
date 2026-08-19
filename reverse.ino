@@ -34,7 +34,10 @@ void loop() {
     digitalWrite(MOTOR_PIN2, LOW);
     digitalWrite(MOTOR_PIN3, LOW);
     digitalWrite(MOTOR_PIN4, LOW);
-  } else {
+
+    delay(100);
+  } 
+  else {
     digitalWrite(MOTOR_PIN1, HIGH);
     digitalWrite(MOTOR_PIN3, LOW);
     digitalWrite(MOTOR_PIN2, HIGH);
