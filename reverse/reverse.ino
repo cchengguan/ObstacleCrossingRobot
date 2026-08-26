@@ -59,10 +59,11 @@ void loop() {
   int microsecs = pulseIn(ECHO_PIN, HIGH);
   float cms = microsecs * SPEED_OF_SOUND / 2;
   int interval = 1000;
-
+  int dist = 7;
   Serial.println(cms);
+
   if (flag != 1) {
-    if (cms < 7) {
+    if (cms < dist) {
       flag = 1;
       offall();
       servotest();
@@ -72,7 +73,9 @@ void loop() {
       count = millis();
     }
   }
-  backward();
+  else {
+    backward();
+  }
 
   delay(10);
 }
