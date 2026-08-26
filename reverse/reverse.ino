@@ -25,7 +25,7 @@ void setup() {
   Serial.begin(9600);
 }
 
-void test() {
+void servotest() {
   ser.write(180);
   delay(100);
   ser.write(0);
@@ -65,7 +65,7 @@ void loop() {
     if (cms < 7) {
       flag = 1;
       offall();
-      test();
+      servotest();
     } 
     else if (millis() - count > interval) {
       forward();
