@@ -1,6 +1,6 @@
 #include <Servo.h>
-Servo ser;
 
+Servo ser;
 int TRIG_PIN = 9;
 int ECHO_PIN = 8;
 int MOTOR_PIN1L = 10; //motor 1
@@ -10,6 +10,7 @@ int MOTOR_PIN4R = 13; // motor 2
 
 float SPEED_OF_SOUND = 0.0345;
 int flag = 0;
+unsigned long count = millis();
 
 
 void setup() {
@@ -26,8 +27,29 @@ void setup() {
 
 void test() {
   ser.write(180);
-  dalay(100);
+  delay(100);
   ser.write(0);
+}
+
+void forward() {
+  digitalWrite(MOTOR_PIN1L, HIGH);
+  digitalWrite(MOTOR_PIN2L, LOW);
+  digitalWrite(MOTOR_PIN3R, HIGH);
+  digitalWrite(MOTOR_PIN4R, LOW);
+}
+
+void backward() {
+  digitalWrite(MOTOR_PIN1L, LOW);
+  digitalWrite(MOTOR_PIN2L, HIGH);
+  digitalWrite(MOTOR_PIN3R, LOW);
+  digitalWrite(MOTOR_PIN4R, HIGH);
+}
+
+void offall() {
+  digitalWrite(MOTOR_PIN1L, LOW);
+  digitalWrite(MOTOR_PIN2L, LOW);
+  digitalWrite(MOTOR_PIN3R, LOW);
+  digitalWrite(MOTOR_PIN4R, LOW);
 }
 
 void loop() {
@@ -36,28 +58,20 @@ void loop() {
   digitalWrite(TRIG_PIN, LOW);
   int microsecs = pulseIn(ECHO_PIN, HIGH);
   float cms = microsecs * SPEED_OF_SOUND / 2;
+  int interval = 1000;
+
   Serial.println(cms);
 
-  if (cms < 7) {
+  if (flag != 1 && cms < 7) {
     flag = 1;
-    digitalWrite(MOTOR_PIN1L, LOW);
-    digitalWrite(MOTOR_PIN2L, LOW);
-    digitalWrite(MOTOR_PIN3R, LOW);
-    digitalWrite(MOTOR_PIN4R, LOW);
-    delay(10);
+    offall();
+    test();
   } 
-  else {
-    digitalWrite(MOTOR_PIN1L, HIGH);
-    digitalWrite(MOTOR_PIN2L, LOW);
-    digitalWrite(MOTOR_PIN3R, HIGH);
-    digitalWrite(MOTOR_PIN4R, LOW);
+  else if (millis() - count > interval) {
+    forward();
   }
-
-  if (flag == 1) {
-    digitalWrite(MOTOR_PIN1L, LOW);
-    digitalWrite(MOTOR_PIN2L, HIGH);
-    digitalWrite(MOTOR_PIN3R, LOW);
-    digitalWrite(MOTOR_PIN4R, HIGH);
+  if (millis() - count > interval && flag == 1) {
+    backward();
   }
 
   delay(10);
