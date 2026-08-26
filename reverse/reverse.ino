@@ -72,10 +72,7 @@ void loop() {
       count = millis();
     }
   }
-  if (millis() - count > interval && flag == 1) {
-    backward();
-    count = millis();
-  }
+  backward();
 
   delay(10);
 }
