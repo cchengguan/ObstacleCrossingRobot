@@ -26,7 +26,7 @@ void setup() {
 
 void test() {
   ser.write(180);
-  delay(1000);
+  dalay(100);
   ser.write(0);
 }
 
@@ -36,7 +36,6 @@ void loop() {
   digitalWrite(TRIG_PIN, LOW);
   int microsecs = pulseIn(ECHO_PIN, HIGH);
   float cms = microsecs * SPEED_OF_SOUND / 2;
-  test();
   Serial.println(cms);
 
   if (cms < 7) {
@@ -45,15 +44,21 @@ void loop() {
     digitalWrite(MOTOR_PIN2L, LOW);
     digitalWrite(MOTOR_PIN3R, LOW);
     digitalWrite(MOTOR_PIN4R, LOW);
-    delay(100);
+    delay(10);
   } 
   else {
     digitalWrite(MOTOR_PIN1L, HIGH);
-    digitalWrite(MOTOR_PIN3R, HIGH);
     digitalWrite(MOTOR_PIN2L, LOW);
+    digitalWrite(MOTOR_PIN3R, HIGH);
     digitalWrite(MOTOR_PIN4R, LOW);
   }
- 
+
+  if (flag == 1) {
+    digitalWrite(MOTOR_PIN1L, LOW);
+    digitalWrite(MOTOR_PIN2L, HIGH);
+    digitalWrite(MOTOR_PIN3R, LOW);
+    digitalWrite(MOTOR_PIN4R, HIGH);
+  }
 
   delay(10);
 }
