@@ -61,17 +61,20 @@ void loop() {
   int interval = 1000;
 
   Serial.println(cms);
-
-  if (flag != 1 && cms < 7) {
-    flag = 1;
-    offall();
-    test();
-  } 
-  else if (millis() - count > interval) {
-    forward();
+  if (flag != 1) {
+    if (cms < 7) {
+      flag = 1;
+      offall();
+      test();
+    } 
+    else if (millis() - count > interval) {
+      forward();
+      count = millis();
+    }
   }
   if (millis() - count > interval && flag == 1) {
     backward();
+    count = millis();
   }
 
   delay(10);
