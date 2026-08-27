@@ -68,6 +68,7 @@ void loop() {
     flag = 1;
     offall(&stop);
     servotest();
+    continue;
   } 
   if (stop == 0) {
     forward();
