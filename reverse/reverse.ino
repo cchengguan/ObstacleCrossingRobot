@@ -63,12 +63,11 @@ void loop() {
   int dist = 7;
   Serial.println(cms);
 
-  if (cms < dist) {
+  if (flag == 0 && cms < dist) {
     count = millis();
     flag = 1;
     offall(&stop);
     servotest();
-    continue;
   } 
   if (stop == 0) {
     forward();
