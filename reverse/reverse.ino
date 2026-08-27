@@ -63,7 +63,7 @@ void loop() {
   int dist = 7;
   Serial.println(cms);
 
-  if (cms < dist && flag == 0) {
+  if (cms < dist) {
     count = millis();
     flag = 1;
     offall(&stop);
