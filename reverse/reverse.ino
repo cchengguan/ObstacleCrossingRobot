@@ -9,6 +9,7 @@ int MOTOR_PIN3R = 12; // motor 2
 int MOTOR_PIN4R = 13; // motor 2
 float SPEED_OF_SOUND = 0.0345;
 int flag = 0;
+int stop = 0;
 unsigned long count = millis();
 
 
@@ -44,11 +45,12 @@ void backward() {
   digitalWrite(MOTOR_PIN4R, HIGH);
 }
 
-void offall() {
+void offall(int* stop) {
   digitalWrite(MOTOR_PIN1L, LOW);
   digitalWrite(MOTOR_PIN2L, LOW);
   digitalWrite(MOTOR_PIN3R, LOW);
   digitalWrite(MOTOR_PIN4R, LOW);
+  *stop = 1;
 }
 
 void loop() {
@@ -61,16 +63,19 @@ void loop() {
   int dist = 7;
   Serial.println(cms);
 
-  if (cms < dist) {
+  if (cms < dist && flag == 0) {
+    count = millis();
     flag = 1;
-    offall();
+    offall(&stop);
     servotest();
   } 
-  else if (flag != 1) {
+  if (stop == 0) {
     forward();
   }
-  else if (flag == 1 && millis() - count > interval) {
-    backward();
+  else if (stop == 1 && millis() - count > interval) {
+    if (flag == 1) {
+      backward();
+    }
     count = millis();
   }
 
