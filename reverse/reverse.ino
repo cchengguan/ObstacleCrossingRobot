@@ -70,7 +70,7 @@ void loop() {
   int dist = 7;
   Serial.println(cms);
 
-  if (cms < dist) {
+  if (cms_from_wall < dist && flag == 0) {
     count = millis();
     flag = 1;
     offall(&stop);
@@ -79,7 +79,8 @@ void loop() {
   if (stop == 0) {
     forward();
   }
-  else if (stop == 1 && millis() - count > interval && flag == 1) {
+  bool delay = millis() - count > interval;
+  else if (stop == 1 && delay && flag == 1) {
     backward();
     count = millis();
   }
