@@ -68,7 +68,7 @@ void loop() {
   double cms_from_wall = getDistance();
   int interval = 4000;
   int dist = 7;
-  Serial.println(cms);
+  Serial.println(cms_from_wall);
 
   if (cms_from_wall < dist && stop == 0) {
     count = millis();
@@ -76,10 +76,10 @@ void loop() {
     offall(&stop);
     servotest();
   } 
+  bool delay = millis() - count > interval;
   if (stop == 0) {
     forward();
   }
-  bool delay = millis() - count > interval;
   else if (stop == 1 && delay && flag == 1) {
     backward();
     count = millis();
