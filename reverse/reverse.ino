@@ -53,16 +53,22 @@ void offall(int* stop) {
   *stop = 1;
 }
 
-void loop() {
+float getDistance() {
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
   int microsecs = pulseIn(ECHO_PIN, HIGH);
   float cms = microsecs * SPEED_OF_SOUND / 2;
+
+  return cms;
+}
+
+void loop() {
+  double cms = getDistance();
   int interval = 4000;
   int dist = 7;
   Serial.println(cms);
-
+  
   if (cms < dist) {
     count = millis();
     flag = 1;
