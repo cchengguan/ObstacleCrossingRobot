@@ -66,24 +66,25 @@ float getDistance() {
 
 void loop() {
   double cms_from_wall = getDistance();
-  int interval = 4000;
-  int dist = 7;
+  int interval = 10;
+  int dist = 30;
   Serial.println(cms_from_wall);
 
-  if (cms_from_wall < dist && stop == 0) {
+  if (cms_from_wall != 0) {
+    if (cms_from_wall < dist && flag == 0) {
     count = millis();
     flag = 1;
     offall(&stop);
     servotest();
-  } 
-  bool delay = millis() - count > interval;
+  }
+  }
+ 
   if (stop == 0) {
     forward();
   }
-  else if (stop == 1 && delay && flag == 1) {
+  bool delay = millis() - count > interval;
+  if (stop == 1 && delay && flag == 1) {
     backward();
     count = millis();
   }
-
-  delay(50);
 }
