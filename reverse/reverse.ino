@@ -22,13 +22,14 @@ void setup() {
   digitalWrite(TRIG_PIN, LOW);
   pinMode(ECHO_PIN, INPUT);
   ser.attach(2);
+  ser.write(130);
   Serial.begin(9600);
 }
 
 void servotest() {
-  ser.write(180);
-  delay(100);
-  ser.write(0);
+  ser.write(20);
+  delay(1000);
+  ser.write(130);
 }
 
 void forward() {
@@ -58,18 +59,18 @@ float getDistance() {
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
   int microsecs = pulseIn(ECHO_PIN, HIGH);
-  float cms = microsecs * SPEED_OF_SOUND / 2;
+  float cms_from_wall = microsecs * SPEED_OF_SOUND / 2;
 
-  return cms;
+  return cms_from_wall;
 }
 
 void loop() {
-  double cms = getDistance();
+  double cms_from_wall = getDistance();
   int interval = 4000;
   int dist = 7;
-  Serial.println(cms);
+  Serial.println(cms_from_wall);
   
-  if (cms < dist) {
+  if (cms_from_wall < dist && flag != 1) {
     count = millis();
     flag = 1;
     offall(&stop);
@@ -78,12 +79,10 @@ void loop() {
   if (stop == 0) {
     forward();
   }
-  else if (stop == 1 && millis() - count > interval) {
-    if (flag == 1) {
-      backward();
-    }
+  else if (stop == 1 && millis() - count > interval && flag == 1) {
+    backward();
     count = millis();
   }
 
-  delay(10);
+  delay(50);
 }
