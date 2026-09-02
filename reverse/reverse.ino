@@ -54,12 +54,12 @@ void offall(int* stop) {
   *stop = 1;
 }
 
-float getDistance() {
+double getDistance() {
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
   int microsecs = pulseIn(ECHO_PIN, HIGH);
-  float cms_from_wall = microsecs * SPEED_OF_SOUND / 2;
+  double cms_from_wall = microsecs * SPEED_OF_SOUND / 2;
 
   return cms_from_wall;
 }
