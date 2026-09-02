@@ -54,7 +54,7 @@ void offall(int* stop) {
   *stop = 1;
 }
 
-float getDistance() {
+double getDistance() {
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
