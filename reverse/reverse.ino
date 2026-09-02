@@ -70,7 +70,7 @@ void loop() {
   int dist = 7;
   Serial.println(cms);
 
-  if (cms_from_wall < dist && flag == 0) {
+  if (cms_from_wall < dist && stop == 0) {
     count = millis();
     flag = 1;
     offall(&stop);
