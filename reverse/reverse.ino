@@ -67,7 +67,7 @@ float getDistance() {
 void loop() {
   double cms_from_wall = getDistance();
   int interval = 4000;
-  int dist = 5;
+  int dist = 7;
   Serial.println(cms);
 
   if (cms_from_wall < dist && flag == 0) {
