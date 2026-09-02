@@ -68,9 +68,9 @@ void loop() {
   double cms_from_wall = getDistance();
   int interval = 4000;
   int dist = 7;
-  Serial.println(cms_from_wall);
-  
-  if (cms_from_wall < dist && flag != 1) {
+  Serial.println(cms);
+
+  if (cms < dist) {
     count = millis();
     flag = 1;
     offall(&stop);
