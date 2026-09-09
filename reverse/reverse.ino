@@ -23,7 +23,7 @@ void setup() {
   pinMode(ECHO_PIN, INPUT);
   ser.attach(2);
   ser.write(130);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void servotest() {
@@ -58,7 +58,7 @@ double getDistance() {
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
-  int microsecs = pulseIn(ECHO_PIN, HIGH);
+  int microsecs = pulseIn(ECHO_PIN, HIGH, 20000);
   double cms_from_wall = microsecs * SPEED_OF_SOUND / 2;
 
   return cms_from_wall;
@@ -66,7 +66,7 @@ double getDistance() {
 
 void loop() {
   double cms_from_wall = getDistance();
-  int interval = 10;
+  int interval = 1000;
   int dist = 30;
   Serial.println(cms_from_wall);
 
