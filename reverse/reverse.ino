@@ -11,7 +11,7 @@ float SPEED_OF_SOUND = 0.0345;
 int flag = 0;
 int stop = 0;
 unsigned long count = 0;
-const unsigned long reverseDelay = 2000; // 2 seconds
+const unsigned long reverseDelay = 1400; // 1.4 seconds
 
 void setup() {
   pinMode(MOTOR_PIN1L, OUTPUT);
@@ -83,18 +83,12 @@ void loop() {
     forward();
   }
   
- /* bool delay = millis() - count > interval;
-  if (stop == 1 && delay && flag == 1) {
-    
-    backward();
-    count = millis();
-  } */
-
   if (stop == 1 &&
     flag == 1 &&
     millis() - count >= reverseDelay) {
     backward();
   }
 }
+
 
 
