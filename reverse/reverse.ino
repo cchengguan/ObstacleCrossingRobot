@@ -10,8 +10,8 @@ int MOTOR_PIN4R = 13; // motor 2
 float SPEED_OF_SOUND = 0.0345;
 int flag = 0;
 int stop = 0;
-unsigned long count = millis();
-
+unsigned long count = 0;
+const unsigned long reverseDelay = 2000; // 2 seconds
 
 void setup() {
   pinMode(MOTOR_PIN1L, OUTPUT);
@@ -21,7 +21,7 @@ void setup() {
   pinMode(TRIG_PIN, OUTPUT);
   digitalWrite(TRIG_PIN, LOW);
   pinMode(ECHO_PIN, INPUT);
-  ser.attach(2);
+  ser.attach(3);
   ser.write(130);
   Serial.begin(115200);
 }
@@ -67,24 +67,32 @@ double getDistance() {
 void loop() {
   double cms_from_wall = getDistance();
   int interval = 1000;
-  int dist = 30;
+  int dist = 13;
   Serial.println(cms_from_wall);
 
   if (cms_from_wall != 0) {
     if (cms_from_wall < dist && flag == 0) {
-    count = millis();
     flag = 1;
     offall(&stop);
     servotest();
-  }
+    count = millis();
+    }
   }
  
   if (stop == 0) {
     forward();
   }
-  bool delay = millis() - count > interval;
+  
+ /* bool delay = millis() - count > interval;
   if (stop == 1 && delay && flag == 1) {
+    
     backward();
     count = millis();
+  } */
+
+  if (stop == 1 &&
+    flag == 1 &&
+    millis() - count >= reverseDelay) {
+    backward();
   }
 }
