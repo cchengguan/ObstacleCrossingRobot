@@ -27,7 +27,7 @@ void setup() {
 }
 
 void servotest() {
-  ser.write(20);
+  ser.write(50);
   delay(1000);
   ser.write(130);
 }
@@ -96,3 +96,5 @@ void loop() {
     backward();
   }
 }
+
+
